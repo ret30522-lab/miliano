@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { categories, type MenuItem } from "@/lib/menu";
 import logoAsset from "@/assets/logo.jpg.asset.json";
 import pizzaHero from "@/assets/pizza.jpg";
