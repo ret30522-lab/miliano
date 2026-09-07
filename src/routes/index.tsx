@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { categories, type MenuItem } from "@/lib/menu";
 import logoAsset from "@/assets/logo.jpg.asset.json";
 import pizzaHero from "@/assets/pizza.jpg";
@@ -27,16 +27,51 @@ export const Route = createFileRoute("/")({
 });
 
 const WHATSAPP = "966552558372";
+const CUSTOMER_INFO_KEY = "miliano-customer-info";
 
 type Cart = Record<string, number>;
 type OrderType = "pickup" | "delivery";
+type CustomerInfo = {
+  name: string;
+  phone: string;
+  address: string;
+};
 
 function Index() {
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCat, setActiveCat] = useState("pizza");
   const [orderType, setOrderType] = useState<OrderType>("pickup");
-  const [address, setAddress] = useState("");
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    name: "",
+    phone: "",
+    address: "",
+  });
+  const [errors, setErrors] = useState<Partial<Record<keyof CustomerInfo, string>>>({});
+
+  // Load saved customer info on mount
+  useEffect(() => {
+    try {
+      const raw = typeof window !== "undefined" ? window.localStorage.getItem(CUSTOMER_INFO_KEY) : null;
+      if (raw) {
+        const parsed = JSON.parse(raw) as CustomerInfo;
+        setCustomerInfo({
+          name: parsed.name || "",
+          phone: parsed.phone || "",
+          address: parsed.address || "",
+        });
+      }
+    } catch {
+      // ignore corrupt storage
+    }
+  }, []);
+
+  // Auto-save customer info whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(CUSTOMER_INFO_KEY, JSON.stringify(customerInfo));
+    }
+  }, [customerInfo]);
 
   const { count, total, lines } = useMemo(() => {
     let count = 0;
@@ -65,16 +100,48 @@ function Index() {
       return next;
     });
 
+  const updateCustomerInfo = (field: keyof CustomerInfo, value: string) => {
+    setCustomerInfo((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const validateOrder = () => {
+    const nextErrors: Partial<Record<keyof CustomerInfo, string>> = {};
+    const trimmedName = customerInfo.name.trim();
+    const trimmedPhone = customerInfo.phone.trim();
+    const trimmedAddress = customerInfo.address.trim();
+
+    if (!trimmedName) nextErrors.name = "الرجاء إدخال الاسم";
+    if (!trimmedPhone) {
+      nextErrors.phone = "الرجاء إدخال رقم الجوال";
+    } else if (!/^[0-9]{9,10}$/.test(trimmedPhone.replace(/\s/g, ""))) {
+      nextErrors.phone = "رقم الجوال يجب أن يكون 9 أو 10 أرقام";
+    }
+    if (orderType === "delivery" && !trimmedAddress) {
+      nextErrors.address = "الرجاء إدخال عنوان التوصيل";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
   const orderViaWhatsApp = () => {
+    if (!validateOrder()) return;
+
     const body = lines
       .map((l) => `• ${l.item.name} × ${l.qty} = ${l.qty * l.item.price} ر.س`)
       .join("\n");
     const typeLine =
       orderType === "pickup"
         ? "طريقة الاستلام: الاستلام من المتجر"
-        : `طريقة الاستلام: التوصيل\nالعنوان: ${address || "لم يُحدد بعد"}`;
+        : `طريقة الاستلام: التوصيل\nالعنوان: ${customerInfo.address.trim()}`;
     const text = encodeURIComponent(
-      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
+      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n` +
+        `الاسم: ${customerInfo.name.trim()}\n` +
+        `رقم الجوال: ${customerInfo.phone.trim()}\n\n` +
+        `${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
@@ -415,39 +482,91 @@ function Index() {
             </div>
             {lines.length > 0 && (
               <div className="border-t border-border p-5">
-                <div className="mb-4 space-y-3">
-                  <p className="text-sm font-bold text-muted-foreground">طريقة الاستلام</p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setOrderType("pickup")}
-                      className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
-                        orderType === "pickup"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-secondary text-secondary-foreground hover:bg-muted"
-                      }`}
-                    >
-                      الاستلام من المتجر
-                    </button>
-                    <button
-                      onClick={() => setOrderType("delivery")}
-                      className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
-                        orderType === "delivery"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-secondary text-secondary-foreground hover:bg-muted"
-                      }`}
-                    >
-                      التوصيل
-                    </button>
+                <div className="mb-4 space-y-4">
+                  <div className="space-y-2">
+                    <label htmlFor="customer-name" className="text-sm font-bold text-muted-foreground">
+                      الاسم
+                    </label>
+                    <input
+                      id="customer-name"
+                      type="text"
+                      value={customerInfo.name}
+                      onChange={(e) => updateCustomerInfo("name", e.target.value)}
+                      placeholder="محمد العلي"
+                      maxLength={60}
+                      className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    />
+                    {errors.name && <p className="text-xs font-semibold text-destructive">{errors.name}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="customer-phone" className="text-sm font-bold text-muted-foreground">
+                      رقم الجوال
+                    </label>
+                    <input
+                      id="customer-phone"
+                      type="tel"
+                      inputMode="tel"
+                      value={customerInfo.phone}
+                      onChange={(e) => updateCustomerInfo("phone", e.target.value.replace(/[^0-9\s]/g, ""))}
+                      placeholder="05xxxxxxxx"
+                      maxLength={14}
+                      className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      dir="ltr"
+                    />
+                    {errors.phone && <p className="text-xs font-semibold text-destructive">{errors.phone}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm font-bold text-muted-foreground">طريقة الاستلام</p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setOrderType("pickup")}
+                        className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
+                          orderType === "pickup"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground hover:bg-muted"
+                        }`}
+                      >
+                        الاستلام من المتجر
+                      </button>
+                      <button
+                        onClick={() => setOrderType("delivery")}
+                        className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
+                          orderType === "delivery"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground hover:bg-muted"
+                        }`}
+                      >
+                        التوصيل
+                      </button>
+                    </div>
                   </div>
                   {orderType === "delivery" && (
-                    <textarea
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="اكتب عنوان التوصيل بالتفصيل..."
-                      className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                      rows={3}
-                    />
+                    <div className="space-y-2">
+                      <label htmlFor="customer-address" className="text-sm font-bold text-muted-foreground">
+                        عنوان التوصيل
+                      </label>
+                      <textarea
+                        id="customer-address"
+                        value={customerInfo.address}
+                        onChange={(e) => updateCustomerInfo("address", e.target.value)}
+                        placeholder="الحي، الشارع، رقم المبنى، الشقة..."
+                        maxLength={300}
+                        className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                        rows={3}
+                      />
+                      {errors.address && <p className="text-xs font-semibold text-destructive">{errors.address}</p>}
+                    </div>
                   )}
+                  <p className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    يُحفظ تلقائيًا في هذا الجهاز لتعبئة الطلبات القادمة
+                  </p>
                 </div>
                 <div className="mb-4 flex items-center justify-between text-lg font-extrabold">
                   <span>الإجمالي</span>
