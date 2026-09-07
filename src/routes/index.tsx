@@ -29,11 +29,14 @@ export const Route = createFileRoute("/")({
 const WHATSAPP = "966552558372";
 
 type Cart = Record<string, number>;
+type OrderType = "pickup" | "delivery";
 
 function Index() {
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCat, setActiveCat] = useState("pizza");
+  const [orderType, setOrderType] = useState<OrderType>("pickup");
+  const [address, setAddress] = useState("");
 
   const { count, total, lines } = useMemo(() => {
     let count = 0;
