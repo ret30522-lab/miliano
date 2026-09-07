@@ -1,10 +1,10 @@
-import pizzaImg from "@/assets/pizza.jpg";
-import burgerImg from "@/assets/burger.jpg.asset.json";
-import friesImg from "@/assets/fries.jpg.asset.json";
-import pastaRedImg from "@/assets/pasta-red.jpg.asset.json";
-import pastaWhiteImg from "@/assets/pasta-white.jpg.asset.json";
-import saladImg from "@/assets/salad.jpg.asset.json";
-import wrapsImg from "@/assets/wraps.jpg.asset.json";
+import pizzaImg from "@/assets/products/pizza.jpg";
+import burgerImg from "@/assets/products/burger.jpg";
+import friesImg from "@/assets/products/fries.jpg";
+import pastaRedImg from "@/assets/products/pasta-red.jpg";
+import pastaWhiteImg from "@/assets/products/pasta-white.jpg";
+import saladImg from "@/assets/products/salad.jpg";
+import wrapsImg from "@/assets/products/wraps.jpg";
 
 export type MenuItem = {
   id: string;
@@ -56,7 +56,7 @@ export const categories: Category[] = [
         name: "مليانو كرسبي برجر",
         desc: "دجاجة مقرمشة، جبنة ذائبة، خس طازج، صوصنا الخاص",
         price: 24,
-        image: burgerImg.url,
+        image: burgerImg,
         tag: "الأكثر طلباً",
       },
     ],
@@ -70,14 +70,14 @@ export const categories: Category[] = [
         name: "بيني بالصلصة الحمراء",
         desc: "صلصة طماطم غنية، بارميزان، ريحان طازج",
         price: 26,
-        image: pastaRedImg.url,
+        image: pastaRedImg,
       },
       {
         id: "pasta-white",
         name: "ألفريدو كريمي",
         desc: "سباغيتي بصوص كريمي ناعم وأوراق ريحان",
         price: 27,
-        image: pastaWhiteImg.url,
+        image: pastaWhiteImg,
       },
     ],
   },
@@ -90,7 +90,7 @@ export const categories: Category[] = [
         name: "بطاطس محشوة بالجبن",
         desc: "بطاطس مقرمشة مغطاة بالدجاج وصوص الجبن الذائب",
         price: 18,
-        image: friesImg.url,
+        image: friesImg,
         tag: "وصفة مليانو",
       },
       {
@@ -98,14 +98,14 @@ export const categories: Category[] = [
         name: "سلطة مليانو",
         desc: "خس طازج، جبنة فيتا، طماطم كرزية، بصل مخلل",
         price: 16,
-        image: saladImg.url,
+        image: saladImg,
       },
       {
         id: "wraps",
         name: "رولات الدجاج المشوية",
         desc: "خبز تورتيلا محمص محشو بالدجاج والخضار",
         price: 20,
-        image: wrapsImg.url,
+        image: wrapsImg,
       },
     ],
   },
