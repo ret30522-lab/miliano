@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { categories, type MenuItem } from "@/lib/menu";
-import logoAsset from "@/assets/logo.jpg.asset.json";
-import pizzaHero from "@/assets/pizza.jpg";
-import boxAsset from "@/assets/box.jpg.asset.json";
+import logoAsset from "@/assets/products/logo.jpg";
+import pizzaHero from "@/assets/products/pizza.jpg";
+import boxAsset from "@/assets/products/box.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -153,7 +153,7 @@ function Index() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#top" className="flex items-center gap-3">
             <img
-              src={logoAsset.url}
+              src={logoAsset}
               alt="شعار مليانو بيتزا"
               className="h-12 w-12 rounded-full border-2 border-accent object-cover"
             />
@@ -341,7 +341,7 @@ function Index() {
       <section className="bg-secondary">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 md:grid-cols-2">
           <img
-            src={boxAsset.url}
+            src={boxAsset}
             alt="تغليف مليانو برجر الأخضر المميز"
             loading="lazy"
             className="w-full rounded-3xl object-cover shadow-xl"
@@ -427,7 +427,7 @@ function Index() {
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 text-center md:grid-cols-3 md:text-right">
           <div>
             <img
-              src={logoAsset.url}
+              src={logoAsset}
               alt="شعار مليانو بيتزا"
               className="mx-auto h-20 w-20 rounded-2xl border-2 border-accent object-cover md:mx-0"
             />

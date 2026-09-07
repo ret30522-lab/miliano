@@ -1,10 +1,10 @@
-import pizzaImg from "@/assets/pizza.jpg";
-import burgerImg from "@/assets/burger.jpg.asset.json";
-import friesImg from "@/assets/fries.jpg.asset.json";
-import pastaRedImg from "@/assets/pasta-red.jpg.asset.json";
-import pastaWhiteImg from "@/assets/pasta-white.jpg.asset.json";
-import saladImg from "@/assets/salad.jpg.asset.json";
-import wrapsImg from "@/assets/wraps.jpg.asset.json";
+import pizzaImg from "@/assets/products/pizza.jpg";
+import burgerImg from "@/assets/products/burger.jpg";
+import friesImg from "@/assets/products/fries.jpg";
+import pastaRedImg from "@/assets/products/pasta-red.jpg";
+import pastaWhiteImg from "@/assets/products/pasta-white.jpg";
+import saladImg from "@/assets/products/salad.jpg";
+import wrapsImg from "@/assets/products/wraps.jpg";
 
 export type MenuItem = {
   id: string;
