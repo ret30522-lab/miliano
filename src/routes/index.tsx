@@ -55,9 +55,10 @@ function Index() {
   const add = (id: string) => setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
   const remove = (id: string) =>
     setCart((c) => {
+      const qty = c[id] ?? 0;
       const next = { ...c };
-      if ((next[id] ?? 0) <= 1) delete next[id];
-      else next[id] -= 1;
+      if (qty <= 1) delete next[id];
+      else next[id] = qty - 1;
       return next;
     });
 
