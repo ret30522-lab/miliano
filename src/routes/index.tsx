@@ -370,6 +370,58 @@ function Index() {
         </div>
       </section>
 
+      {/* Location map */}
+      <section className="bg-background" id="location">
+        <div className="mx-auto max-w-6xl px-4 py-14">
+          <div className="mb-8 text-center md:text-right">
+            <h2 className="text-3xl font-black text-primary md:text-4xl">موقعنا على الخريطة</h2>
+            <p className="mt-2 text-muted-foreground">
+              العثيم مول، طريق خريص، النسيم الشرقي، الرياض 14241
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-3xl border border-border shadow-xl">
+            <div className="relative h-80 w-full md:h-[420px]">
+              <iframe
+                src="https://maps.google.com/maps?q=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="موقع مليانو بيتزا"
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground transition hover:opacity-90"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                <path
+                  fillRule="evenodd"
+                  d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7Zm3 17v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1h6Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              احصل على الاتجاهات
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 font-bold text-foreground transition hover:bg-muted"
+            >
+              تواصل عبر واتساب
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 text-center md:grid-cols-3 md:text-right">
