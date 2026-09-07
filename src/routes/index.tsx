@@ -27,16 +27,51 @@ export const Route = createFileRoute("/")({
 });
 
 const WHATSAPP = "966552558372";
+const CUSTOMER_INFO_KEY = "miliano-customer-info";
 
 type Cart = Record<string, number>;
 type OrderType = "pickup" | "delivery";
+type CustomerInfo = {
+  name: string;
+  phone: string;
+  address: string;
+};
 
 function Index() {
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCat, setActiveCat] = useState("pizza");
   const [orderType, setOrderType] = useState<OrderType>("pickup");
-  const [address, setAddress] = useState("");
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    name: "",
+    phone: "",
+    address: "",
+  });
+  const [errors, setErrors] = useState<Partial<Record<keyof CustomerInfo, string>>>({});
+
+  // Load saved customer info on mount
+  useEffect(() => {
+    try {
+      const raw = typeof window !== "undefined" ? window.localStorage.getItem(CUSTOMER_INFO_KEY) : null;
+      if (raw) {
+        const parsed = JSON.parse(raw) as CustomerInfo;
+        setCustomerInfo({
+          name: parsed.name || "",
+          phone: parsed.phone || "",
+          address: parsed.address || "",
+        });
+      }
+    } catch {
+      // ignore corrupt storage
+    }
+  }, []);
+
+  // Auto-save customer info whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(CUSTOMER_INFO_KEY, JSON.stringify(customerInfo));
+    }
+  }, [customerInfo]);
 
   const { count, total, lines } = useMemo(() => {
     let count = 0;
