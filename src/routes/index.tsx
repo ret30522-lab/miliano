@@ -100,16 +100,48 @@ function Index() {
       return next;
     });
 
+  const updateCustomerInfo = (field: keyof CustomerInfo, value: string) => {
+    setCustomerInfo((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const validateOrder = () => {
+    const nextErrors: Partial<Record<keyof CustomerInfo, string>> = {};
+    const trimmedName = customerInfo.name.trim();
+    const trimmedPhone = customerInfo.phone.trim();
+    const trimmedAddress = customerInfo.address.trim();
+
+    if (!trimmedName) nextErrors.name = "الرجاء إدخال الاسم";
+    if (!trimmedPhone) {
+      nextErrors.phone = "الرجاء إدخال رقم الجوال";
+    } else if (!/^[0-9]{9,10}$/.test(trimmedPhone.replace(/\s/g, ""))) {
+      nextErrors.phone = "رقم الجوال يجب أن يكون 9 أو 10 أرقام";
+    }
+    if (orderType === "delivery" && !trimmedAddress) {
+      nextErrors.address = "الرجاء إدخال عنوان التوصيل";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
   const orderViaWhatsApp = () => {
+    if (!validateOrder()) return;
+
     const body = lines
       .map((l) => `• ${l.item.name} × ${l.qty} = ${l.qty * l.item.price} ر.س`)
       .join("\n");
     const typeLine =
       orderType === "pickup"
         ? "طريقة الاستلام: الاستلام من المتجر"
-        : `طريقة الاستلام: التوصيل\nالعنوان: ${address || "لم يُحدد بعد"}`;
+        : `طريقة الاستلام: التوصيل\nالعنوان: ${customerInfo.address.trim()}`;
     const text = encodeURIComponent(
-      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
+      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n` +
+        `الاسم: ${customerInfo.name.trim()}\n` +
+        `رقم الجوال: ${customerInfo.phone.trim()}\n\n` +
+        `${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
