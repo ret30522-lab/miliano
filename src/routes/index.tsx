@@ -402,6 +402,40 @@ function Index() {
             </div>
             {lines.length > 0 && (
               <div className="border-t border-border p-5">
+                <div className="mb-4 space-y-3">
+                  <p className="text-sm font-bold text-muted-foreground">طريقة الاستلام</p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setOrderType("pickup")}
+                      className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
+                        orderType === "pickup"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary text-secondary-foreground hover:bg-muted"
+                      }`}
+                    >
+                      الاستلام من المتجر
+                    </button>
+                    <button
+                      onClick={() => setOrderType("delivery")}
+                      className={`flex-1 rounded-full py-2 text-sm font-bold transition ${
+                        orderType === "delivery"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary text-secondary-foreground hover:bg-muted"
+                      }`}
+                    >
+                      التوصيل
+                    </button>
+                  </div>
+                  {orderType === "delivery" && (
+                    <textarea
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      placeholder="اكتب عنوان التوصيل بالتفصيل..."
+                      className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      rows={3}
+                    />
+                  )}
+                </div>
                 <div className="mb-4 flex items-center justify-between text-lg font-extrabold">
                   <span>الإجمالي</span>
                   <span className="text-accent">{total} ر.س</span>
