@@ -69,8 +69,12 @@ function Index() {
     const body = lines
       .map((l) => `• ${l.item.name} × ${l.qty} = ${l.qty * l.item.price} ر.س`)
       .join("\n");
+    const typeLine =
+      orderType === "pickup"
+        ? "طريقة الاستلام: الاستلام من المتجر"
+        : `طريقة الاستلام: التوصيل\nالعنوان: ${address || "لم يُحدد بعد"}`;
     const text = encodeURIComponent(
-      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n${body}\n\nالإجمالي: ${total} ر.س`,
+      `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
