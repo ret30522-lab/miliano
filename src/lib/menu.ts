@@ -1,5 +1,6 @@
 import pizzaImg from "@/assets/products/pizza.jpg";
 
+import burgerImg from "@/assets/products/burger.jpg";
 import friesImg from "@/assets/products/fries.jpg";
 import pastaRedImg from "@/assets/products/pasta-red.jpg";
 import pastaWhiteImg from "@/assets/products/pasta-white.jpg";
