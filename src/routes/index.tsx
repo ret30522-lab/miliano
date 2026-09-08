@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "مليانو بيتزا في العثيم مول بالرياض — بيتزا، برجر، باستا وبطاطس محشوة. اطلب الآن عبر واتساب 0552558372. تقييم 4.9 من 452 مراجعة.",
+          "مليانو بيتزا — فرعا العثيم مول (طريق خريص) وحياة مول (طريق الملك عبدالعزيز) بالرياض. بيتزا، باستا وأطباق جانبية. اطلب الآن عبر واتساب 0552558372. تقييم 4.9 من 452 مراجعة.",
       },
       { property: "og:title", content: "مليانو بيتزا | اطلب أونلاين عبر واتساب" },
       {
@@ -159,7 +159,7 @@ function Index() {
             />
             <div>
               <p className="text-lg font-extrabold leading-tight text-primary">مليانو بيتزا</p>
-              <p className="text-xs text-muted-foreground">العثيم مول · الرياض</p>
+              <p className="text-xs text-muted-foreground">العثيم مول · حياة مول · الرياض</p>
             </div>
           </a>
           <div className="flex items-center gap-2">
@@ -374,50 +374,107 @@ function Index() {
       <section className="bg-background" id="location">
         <div className="mx-auto max-w-6xl px-4 py-14">
           <div className="mb-8 text-center md:text-right">
-            <h2 className="text-3xl font-black text-primary md:text-4xl">موقعنا على الخريطة</h2>
+            <h2 className="text-3xl font-black text-primary md:text-4xl">فروعنا على الخريطة</h2>
             <p className="mt-2 text-muted-foreground">
-              العثيم مول، طريق خريص، النسيم الشرقي، الرياض 14241
+              اختر أقرب فرع واطلب منه مباشرة
             </p>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-border shadow-xl">
-            <div className="relative h-80 w-full md:h-[420px]">
-              <iframe
-                src="https://maps.google.com/maps?q=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241&z=15&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="موقع مليانو بيتزا"
-                className="absolute inset-0 h-full w-full"
-              />
-            </div>
-          </div>
-          <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground transition hover:opacity-90"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                <path
-                  fillRule="evenodd"
-                  d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7Zm3 17v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1h6Z"
-                  clipRule="evenodd"
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* Branch 1 */}
+            <div className="overflow-hidden rounded-3xl border border-border shadow-xl">
+              <div className="relative h-64 w-full md:h-80">
+                <iframe
+                  src="https://maps.google.com/maps?q=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="فرع مليانو بيتزا - العثيم مول"
+                  className="absolute inset-0 h-full w-full"
                 />
-              </svg>
-              احصل على الاتجاهات
-            </a>
-            <a
-              href={`https://wa.me/${WHATSAPP}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 font-bold text-foreground transition hover:bg-muted"
-            >
-              تواصل عبر واتساب
-            </a>
+              </div>
+              <div className="bg-card p-5 text-center md:text-right">
+                <h3 className="text-lg font-extrabold text-primary">فرع العثيم مول</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  العثيم مول، طريق خريص، النسيم الشرقي، الرياض 14241
+                </p>
+                <div className="mt-4 flex flex-wrap justify-center gap-2 md:justify-start">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Al+Othaim+Mall,+Khurais+Road,+Eastern+Naseem,+Riyadh+14241"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition hover:opacity-90"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                      <path
+                        fillRule="evenodd"
+                        d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7Zm3 17v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1h6Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    الاتجاهات
+                  </a>
+                  <a
+                    href={`https://wa.me/${WHATSAPP}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-bold text-foreground transition hover:bg-muted"
+                  >
+                    واتساب
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Branch 2 */}
+            <div className="overflow-hidden rounded-3xl border border-border shadow-xl">
+              <div className="relative h-64 w-full md:h-80">
+                <iframe
+                  src="https://maps.google.com/maps?q=Hayat+Mall,+King+Abdulaziz+Road,+Al-Malik+Fahd,+Riyadh+12272&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="فرع مليانو بيتزا - حياة مول"
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
+              <div className="bg-card p-5 text-center md:text-right">
+                <h3 className="text-lg font-extrabold text-primary">فرع حياة مول</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  حياة مول، طريق الملك عبدالعزيز، الملك فهد، الرياض 12272
+                </p>
+                <div className="mt-4 flex flex-wrap justify-center gap-2 md:justify-start">
+                  <a
+                    href="https://www.google.com/maps/place/%D9%85%D9%84%D9%8A%D8%A7%D9%86%D9%88+%D8%A8%D9%8A%D8%AA%D8%B2%D8%A7+%D8%AD%D9%8A%D8%A7%D8%A9+%D9%85%D9%88%D9%84%D8%8C+%D8%B7%D8%B1%D9%8A%D9%82+%D8%A7%D9%84%D9%85%D9%84%D9%83+%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2%D8%8C+%D8%A7%D9%84%D9%85%D9%84%D9%83+%D9%81%D9%87%D8%AF%D8%8C+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6+12272"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition hover:opacity-90"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                      <path
+                        fillRule="evenodd"
+                        d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7Zm3 17v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1h6Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    الاتجاهات
+                  </a>
+                  <a
+                    href={`https://wa.me/${WHATSAPP}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-bold text-foreground transition hover:bg-muted"
+                  >
+                    واتساب
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -434,9 +491,12 @@ function Index() {
             <p className="mt-3 font-extrabold">مليانو بيتزا — تأسست 2024</p>
           </div>
           <div>
-            <h4 className="font-extrabold text-accent">الموقع والدوام</h4>
+            <h4 className="font-extrabold text-accent">فروعنا والدوام</h4>
             <p className="mt-2 text-sm text-primary-foreground/80">
               العثيم مول، طريق خريص، النسيم الشرقي، الرياض 14241
+            </p>
+            <p className="mt-1 text-sm text-primary-foreground/80">
+              حياة مول، طريق الملك عبدالعزيز، الملك فهد، الرياض 12272
             </p>
             <p className="mt-1 text-sm text-primary-foreground/80">يومياً حتى ١٢:٣٠ منتصف الليل</p>
           </div>
