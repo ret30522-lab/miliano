@@ -148,6 +148,41 @@ export const categories: Category[] = [
     ],
   },
   {
+    id: "burger",
+    label: "البرجر",
+    items: [
+      {
+        id: "burger-classic",
+        name: "برجر كلاسيك",
+        desc: "لحم مشوي طازج مع الجبنة والخس والطماطم وصوصنا الخاص",
+        price: 22,
+        image: burgerImg,
+      },
+      {
+        id: "burger-cheese",
+        name: "تشيز برجر",
+        desc: "لحم مشوي مع طبقة إضافية من الجبنة الذائبة",
+        price: 25,
+        image: burgerImg,
+        tag: "الأكثر طلباً",
+      },
+      {
+        id: "burger-double",
+        name: "دبل برجر",
+        desc: "قطعتان لحم مشوي مع الجبنة والخضار الطازجة",
+        price: 32,
+        image: burgerImg,
+      },
+      {
+        id: "burger-chicken",
+        name: "تشيكن برجر",
+        desc: "دجاج مقرمش مع الخس والمايونيز الخاص",
+        price: 20,
+        image: burgerImg,
+      },
+    ],
+  },
+  {
     id: "pasta",
     label: "الباستا",
     items: [
