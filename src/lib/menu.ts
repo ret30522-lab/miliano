@@ -1,5 +1,6 @@
 import pizzaImg from "@/assets/products/pizza.jpg";
 
+import burgerImg from "@/assets/products/burger.jpg";
 import friesImg from "@/assets/products/fries.jpg";
 import pastaRedImg from "@/assets/products/pasta-red.jpg";
 import pastaWhiteImg from "@/assets/products/pasta-white.jpg";
@@ -143,6 +144,41 @@ export const categories: Category[] = [
         desc: "شرائح البيبروني مع الفلفل والخضروات الطازجة والفطر والزيتون الأسود مع صلصة البيتزا والموزاريلا",
         price: 25,
         image: pizzaImg,
+      },
+    ],
+  },
+  {
+    id: "burger",
+    label: "البرجر",
+    items: [
+      {
+        id: "burger-classic",
+        name: "برجر كلاسيك",
+        desc: "لحم مشوي طازج مع الجبنة والخس والطماطم وصوصنا الخاص",
+        price: 22,
+        image: burgerImg,
+      },
+      {
+        id: "burger-cheese",
+        name: "تشيز برجر",
+        desc: "لحم مشوي مع طبقة إضافية من الجبنة الذائبة",
+        price: 25,
+        image: burgerImg,
+        tag: "الأكثر طلباً",
+      },
+      {
+        id: "burger-double",
+        name: "دبل برجر",
+        desc: "قطعتان لحم مشوي مع الجبنة والخضار الطازجة",
+        price: 32,
+        image: burgerImg,
+      },
+      {
+        id: "burger-chicken",
+        name: "تشيكن برجر",
+        desc: "دجاج مقرمش مع الخس والمايونيز الخاص",
+        price: 20,
+        image: burgerImg,
       },
     ],
   },
