@@ -1,4 +1,3 @@
-import pizzaImg from "@/assets/products/pizza.jpg";
 import pizzaSupreme from "@/assets/products/pizza-supreme.jpg";
 import pizzaFajita from "@/assets/products/pizza-fajita.jpg";
 import pizzaPesto from "@/assets/products/pizza-pesto.jpg";
@@ -26,8 +25,6 @@ import burgerChicken from "@/assets/products/burger-chicken.jpg";
 
 import burgerImg from "@/assets/products/burger.jpg";
 import friesImg from "@/assets/products/fries.jpg";
-import pastaRedImg from "@/assets/products/pasta-red.jpg";
-import pastaWhiteImg from "@/assets/products/pasta-white.jpg";
 import saladImg from "@/assets/products/salad.jpg";
 import wrapsImg from "@/assets/products/wraps.jpg";
 
