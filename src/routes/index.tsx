@@ -48,6 +48,7 @@ function Index() {
     address: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerInfo, string>>>({});
+  const [notes, setNotes] = useState("");
 
   // Load saved customer info on mount
   useEffect(() => {
@@ -141,7 +142,9 @@ function Index() {
       `السلام عليكم، أود الطلب من مليانو بيتزا:\n\n` +
         `الاسم: ${customerInfo.name.trim()}\n` +
         `رقم الجوال: ${customerInfo.phone.trim()}\n\n` +
-        `${body}\n\n${typeLine}\n\nالإجمالي: ${total} ر.س`,
+        `${body}\n\n${typeLine}\n\n` +
+        (notes.trim() ? `ملاحظات: ${notes.trim()}\n\n` : "") +
+        `الإجمالي: ${total} ر.س`,
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
@@ -669,6 +672,20 @@ function Index() {
                       {errors.address && <p className="text-xs font-semibold text-destructive">{errors.address}</p>}
                     </div>
                   )}
+                  <div className="space-y-2">
+                    <label htmlFor="order-notes" className="text-sm font-bold text-muted-foreground">
+                      ملاحظات على الطلب (اختياري)
+                    </label>
+                    <textarea
+                      id="order-notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="مثال: بدون صوص، زيادة جبن، حار قليل..."
+                      maxLength={300}
+                      rows={3}
+                      className="w-full rounded-2xl border border-border bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    />
+                  </div>
                   <p className="flex items-center gap-2 text-xs text-muted-foreground">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
                       <path
