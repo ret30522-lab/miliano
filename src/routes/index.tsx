@@ -4,6 +4,8 @@ import { categories, type MenuItem } from "@/lib/menu";
 import logoAsset from "@/assets/products/logo.jpg";
 import pizzaHero from "@/assets/products/pizza.jpg";
 import boxAsset from "@/assets/products/box.jpg";
+import offer49 from "@/assets/products/offer-karam-49.jpg";
+import offer96 from "@/assets/products/offer-karam-96.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -243,6 +245,38 @@ function Index() {
           ))}
         </div>
       </div>
+
+      {/* National Day offers */}
+      <section id="offers" className="mx-auto max-w-6xl px-4 pt-12">
+        <div className="mb-6 text-center">
+          <span className="inline-block rounded-full bg-primary px-4 py-1 text-sm font-bold text-primary-foreground">
+            عروض اليوم الوطني · لفترة محدودة
+          </span>
+          <h2 className="mt-3 text-3xl font-black text-primary md:text-4xl">عروض الكرم</h2>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {[
+            { img: offer49, alt: "عرض الكرم ٤٩ ريال: ٣ بيتزا وباستا و٣ سلطات", label: "عرض الكرم — ٤٩ ر.س" },
+            { img: offer96, alt: "عرض الكرم ٩٦ ريال: ٣ بيتزا وباستا و٣ مشروبات", label: "عرض الكرم — ٩٦ ر.س" },
+          ].map((o) => (
+            <a
+              key={o.label}
+              href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`السلام عليكم، أرغب بطلب ${o.label}`)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="group overflow-hidden rounded-3xl border border-border bg-card shadow-lg transition hover:shadow-xl"
+            >
+              <img src={o.img} alt={o.alt} loading="lazy" className="w-full object-cover transition group-hover:scale-[1.02]" />
+              <div className="flex items-center justify-between gap-3 p-4">
+                <span className="font-extrabold text-primary">{o.label}</span>
+                <span className="rounded-full bg-accent px-4 py-2 text-sm font-bold text-accent-foreground">
+                  اطلب عبر واتساب
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
 
       {/* Menu */}
       <main id="menu" className="mx-auto max-w-6xl px-4 py-14">
