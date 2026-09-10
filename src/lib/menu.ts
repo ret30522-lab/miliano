@@ -20,10 +20,8 @@ import pastaArrabiata from "@/assets/products/pasta-arrabiata.jpg";
 import kidsMealImg from "@/assets/products/kids-meal.jpg";
 import wedgesImg from "@/assets/products/fries-wedges.jpg";
 import saladMexican from "@/assets/products/salad-mexican.jpg";
-import burgerDouble from "@/assets/products/burger-double.jpg";
 import burgerChicken from "@/assets/products/burger-chicken.jpg";
 
-import burgerImg from "@/assets/products/burger.jpg";
 import friesImg from "@/assets/products/fries.jpg";
 import saladImg from "@/assets/products/salad.jpg";
 import wrapsImg from "@/assets/products/wraps.jpg";
@@ -173,33 +171,12 @@ export const categories: Category[] = [
     label: "البرجر",
     items: [
       {
-        id: "burger-classic",
-        name: "برجر كلاسيك",
-        desc: "لحم مشوي طازج مع الجبنة والخس والطماطم وصوصنا الخاص",
-        price: 22,
-        image: burgerImg,
-      },
-      {
-        id: "burger-cheese",
-        name: "تشيز برجر",
-        desc: "لحم مشوي مع طبقة إضافية من الجبنة الذائبة",
-        price: 25,
-        image: burgerImg,
-        tag: "الأكثر طلباً",
-      },
-      {
-        id: "burger-double",
-        name: "دبل برجر",
-        desc: "قطعتان لحم مشوي مع الجبنة والخضار الطازجة",
-        price: 32,
-        image: burgerDouble,
-      },
-      {
         id: "burger-chicken",
         name: "تشيكن برجر",
         desc: "دجاج مقرمش مع الخس والمايونيز الخاص",
-        price: 20,
+        price: 17,
         image: burgerChicken,
+        tag: "الأكثر طلباً",
       },
     ],
   },
