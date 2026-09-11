@@ -14,7 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      menu_categories: {
+        Row: {
+          id: string
+          is_active: boolean
+          label: string
+          sort: number
+        }
+        Insert: {
+          id: string
+          is_active?: boolean
+          label: string
+          sort?: number
+        }
+        Update: {
+          id?: string
+          is_active?: boolean
+          label?: string
+          sort?: number
+        }
+        Relationships: []
+      }
+      menu_items: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string
+          id: string
+          image_key: string
+          is_available: boolean
+          name: string
+          price: number
+          slug: string
+          sort: number
+          tag: string | null
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_key?: string
+          is_available?: boolean
+          name: string
+          price?: number
+          slug: string
+          sort?: number
+          tag?: string | null
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_key?: string
+          is_available?: boolean
+          name?: string
+          price?: number
+          slug?: string
+          sort?: number
+          tag?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "menu_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      offers: {
+        Row: {
+          created_at: string
+          id: string
+          image_key: string
+          is_active: boolean
+          price: number | null
+          sort: number
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_key?: string
+          is_active?: boolean
+          price?: number | null
+          sort?: number
+          title: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_key?: string
+          is_active?: boolean
+          price?: number | null
+          sort?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          address: string | null
+          created_at: string
+          customer_name: string
+          id: string
+          items: Json
+          notes: string | null
+          order_type: string
+          phone: string
+          status: string
+          total: number
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          customer_name: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          order_type?: string
+          phone: string
+          status?: string
+          total?: number
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          customer_name?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          order_type?: string
+          phone?: string
+          status?: string
+          total?: number
+        }
+        Relationships: []
+      }
+      store_settings: {
+        Row: {
+          admin_password_hash: string
+          branch_one: string
+          branch_two: string
+          delivery_enabled: boolean
+          hours: string
+          id: boolean
+          phone: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          admin_password_hash?: string
+          branch_one?: string
+          branch_two?: string
+          delivery_enabled?: boolean
+          hours?: string
+          id?: boolean
+          phone?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          admin_password_hash?: string
+          branch_one?: string
+          branch_two?: string
+          delivery_enabled?: boolean
+          hours?: string
+          id?: boolean
+          phone?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
