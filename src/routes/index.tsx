@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { categories, type MenuItem } from "@/lib/menu";
+import { useQuery } from "@tanstack/react-query";
+import { categories as staticCategories, type MenuItem } from "@/lib/menu";
+import { fetchMenu, fetchOffers, fetchSettings, defaultSettings, saveOrder } from "@/lib/store";
+import { resolveImage } from "@/lib/product-images";
 import logoAsset from "@/assets/products/logo.jpg";
 import pizzaHero from "@/assets/products/pizza.jpg";
 import boxAsset from "@/assets/products/box.jpg";
@@ -28,7 +31,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP = "966552558372";
+const DEFAULT_WHATSAPP = "966552558372";
 const CUSTOMER_INFO_KEY = "miliano-customer-info";
 
 type Cart = Record<string, number>;
@@ -40,6 +43,25 @@ type CustomerInfo = {
 };
 
 function Index() {
+  const menuQuery = useQuery({ queryKey: ["menu"], queryFn: fetchMenu });
+  const offersQuery = useQuery({ queryKey: ["offers"], queryFn: fetchOffers });
+  const settingsQuery = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
+  const categories = menuQuery.data ?? staticCategories;
+  const settings = settingsQuery.data ?? defaultSettings;
+  const WHATSAPP = settings.whatsapp || DEFAULT_WHATSAPP;
+  const offersList = (offersQuery.data ?? []).length
+    ? (offersQuery.data ?? []).map((o) => ({
+        img: resolveImage(o.image_key) || offer49,
+        alt: o.title,
+        label: o.price ? `${o.title} — ${o.price} ر.س` : o.title,
+      }))
+    : offersQuery.isLoading
+      ? [
+          { img: offer49, alt: "عرض الكرم ٤٩ ريال: ٣ بيتزا وباستا و٣ سلطات", label: "عرض الكرم — ٤٩ ر.س" },
+          { img: offer96, alt: "عرض الكرم ٩٦ ريال: ٣ بيتزا وباستا و٣ مشروبات", label: "عرض الكرم — ٩٦ ر.س" },
+        ]
+      : [];
+
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCat, setActiveCat] = useState("pizza");
@@ -91,7 +113,7 @@ function Index() {
       }
     }
     return { count, total, lines };
-  }, [cart]);
+  }, [cart, categories]);
 
   const add = (id: string) => setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
   const remove = (id: string) =>
@@ -148,6 +170,16 @@ function Index() {
         (notes.trim() ? `ملاحظات: ${notes.trim()}\n\n` : "") +
         `الإجمالي: ${total} ر.س`,
     );
+    void saveOrder({
+      customer_name: customerInfo.name.trim(),
+      phone: customerInfo.phone.trim(),
+      address: orderType === "delivery" ? customerInfo.address.trim() : null,
+      order_type: orderType,
+      notes: notes.trim() ? notes.trim() : null,
+      items: lines.map((l) => ({ name: l.item.name, qty: l.qty, price: l.item.price })),
+      total,
+    }).catch(() => undefined);
+
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
 
@@ -247,6 +279,7 @@ function Index() {
       </div>
 
       {/* National Day offers */}
+      {offersList.length > 0 && (
       <section id="offers" className="mx-auto max-w-6xl px-4 pt-12">
         <div className="mb-6 text-center">
           <span className="inline-block rounded-full bg-primary px-4 py-1 text-sm font-bold text-primary-foreground">
@@ -255,10 +288,7 @@ function Index() {
           <h2 className="mt-3 text-3xl font-black text-primary md:text-4xl">عروض الكرم</h2>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
-          {[
-            { img: offer49, alt: "عرض الكرم ٤٩ ريال: ٣ بيتزا وباستا و٣ سلطات", label: "عرض الكرم — ٤٩ ر.س" },
-            { img: offer96, alt: "عرض الكرم ٩٦ ريال: ٣ بيتزا وباستا و٣ مشروبات", label: "عرض الكرم — ٩٦ ر.س" },
-          ].map((o) => (
+          {offersList.map((o) => (
             <a
               key={o.label}
               href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`السلام عليكم، أرغب بطلب ${o.label}`)}`}
@@ -277,6 +307,7 @@ function Index() {
           ))}
         </div>
       </section>
+      )}
 
       {/* Menu */}
       <main id="menu" className="mx-auto max-w-6xl px-4 py-14">

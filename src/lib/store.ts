@@ -47,7 +47,7 @@ export async function fetchMenu(): Promise<Category[]> {
         desc: i.description,
         price: Number(i.price),
         image: resolveImage(i.image_key),
-        tag: i.tag ?? undefined,
+        ...(i.tag ? { tag: i.tag } : {}),
       })),
   }));
 }
