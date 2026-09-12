@@ -116,7 +116,7 @@ function AdminPage() {
   const changePassword = useServerFn(adminChangePassword);
 
   const refresh = async (pass: string) => {
-    const res = (await loadAll({ data: { password: pass } })) as Data;
+    const res = (await loadAll({ data: { password: pass } })) as unknown as Data;
     setData({
       ...res,
       items: res.items.map((i) => ({ ...i, price: Number(i.price) })),
