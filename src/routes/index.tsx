@@ -49,7 +49,18 @@ function Index() {
   const categories = menuQuery.data ?? staticCategories;
   const settings = settingsQuery.data ?? defaultSettings;
   const WHATSAPP = settings.whatsapp || DEFAULT_WHATSAPP;
-  const dbOffers = offersQuery.data ?? [];
+  const offersList = (offersQuery.data ?? []).length
+    ? (offersQuery.data ?? []).map((o) => ({
+        img: resolveImage(o.image_key) || offer49,
+        alt: o.title,
+        label: o.price ? `${o.title} — ${o.price} ر.س` : o.title,
+      }))
+    : offersQuery.isLoading
+      ? [
+          { img: offer49, alt: "عرض الكرم ٤٩ ريال: ٣ بيتزا وباستا و٣ سلطات", label: "عرض الكرم — ٤٩ ر.س" },
+          { img: offer96, alt: "عرض الكرم ٩٦ ريال: ٣ بيتزا وباستا و٣ مشروبات", label: "عرض الكرم — ٩٦ ر.س" },
+        ]
+      : [];
 
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
@@ -296,6 +307,7 @@ function Index() {
           ))}
         </div>
       </section>
+      )}
 
       {/* Menu */}
       <main id="menu" className="mx-auto max-w-6xl px-4 py-14">
