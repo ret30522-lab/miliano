@@ -268,6 +268,7 @@ function Index() {
       </div>
 
       {/* National Day offers */}
+      {offersList.length > 0 && (
       <section id="offers" className="mx-auto max-w-6xl px-4 pt-12">
         <div className="mb-6 text-center">
           <span className="inline-block rounded-full bg-primary px-4 py-1 text-sm font-bold text-primary-foreground">
@@ -276,10 +277,7 @@ function Index() {
           <h2 className="mt-3 text-3xl font-black text-primary md:text-4xl">عروض الكرم</h2>
         </div>
         <div className="grid gap-6 sm:grid-cols-2">
-          {[
-            { img: offer49, alt: "عرض الكرم ٤٩ ريال: ٣ بيتزا وباستا و٣ سلطات", label: "عرض الكرم — ٤٩ ر.س" },
-            { img: offer96, alt: "عرض الكرم ٩٦ ريال: ٣ بيتزا وباستا و٣ مشروبات", label: "عرض الكرم — ٩٦ ر.س" },
-          ].map((o) => (
+          {offersList.map((o) => (
             <a
               key={o.label}
               href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`السلام عليكم، أرغب بطلب ${o.label}`)}`}
