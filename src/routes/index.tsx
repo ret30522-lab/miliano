@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { categories, type MenuItem } from "@/lib/menu";
+import { useQuery } from "@tanstack/react-query";
+import { categories as staticCategories, type MenuItem } from "@/lib/menu";
+import { fetchMenu, fetchOffers, fetchSettings, defaultSettings, saveOrder } from "@/lib/store";
+import { resolveImage } from "@/lib/product-images";
 import logoAsset from "@/assets/products/logo.jpg";
 import pizzaHero from "@/assets/products/pizza.jpg";
 import boxAsset from "@/assets/products/box.jpg";
