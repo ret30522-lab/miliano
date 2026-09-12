@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP = "966552558372";
+const DEFAULT_WHATSAPP = "966552558372";
 const CUSTOMER_INFO_KEY = "miliano-customer-info";
 
 type Cart = Record<string, number>;
@@ -43,6 +43,14 @@ type CustomerInfo = {
 };
 
 function Index() {
+  const menuQuery = useQuery({ queryKey: ["menu"], queryFn: fetchMenu });
+  const offersQuery = useQuery({ queryKey: ["offers"], queryFn: fetchOffers });
+  const settingsQuery = useQuery({ queryKey: ["settings"], queryFn: fetchSettings });
+  const categories = menuQuery.data ?? staticCategories;
+  const settings = settingsQuery.data ?? defaultSettings;
+  const WHATSAPP = settings.whatsapp || DEFAULT_WHATSAPP;
+  const dbOffers = offersQuery.data ?? [];
+
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
   const [activeCat, setActiveCat] = useState("pizza");
