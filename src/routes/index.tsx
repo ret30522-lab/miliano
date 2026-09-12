@@ -102,7 +102,7 @@ function Index() {
       }
     }
     return { count, total, lines };
-  }, [cart]);
+  }, [cart, categories]);
 
   const add = (id: string) => setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
   const remove = (id: string) =>
@@ -159,6 +159,16 @@ function Index() {
         (notes.trim() ? `ملاحظات: ${notes.trim()}\n\n` : "") +
         `الإجمالي: ${total} ر.س`,
     );
+    void saveOrder({
+      customer_name: customerInfo.name.trim(),
+      phone: customerInfo.phone.trim(),
+      address: orderType === "delivery" ? customerInfo.address.trim() : null,
+      order_type: orderType,
+      notes: notes.trim() ? notes.trim() : null,
+      items: lines.map((l) => ({ name: l.item.name, qty: l.qty, price: l.item.price })),
+      total,
+    }).catch(() => undefined);
+
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
   };
 
